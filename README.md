@@ -1,1 +1,0 @@
-# sd4719_aws_infrastructure
