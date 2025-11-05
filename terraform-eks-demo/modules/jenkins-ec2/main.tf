@@ -108,3 +108,13 @@ resource "aws_instance" "jenkins" {
   # user_data could bootstrap docker & jenkins; left minimal so you can control it
   # user_data = file("${path.module}/bootstrap.sh")
 }
+
+data "aws_ami" "amazon_linux_2" {
+  most_recent = true
+  owners      = ["amazon"] # official AMIs only
+
+  filter {
+    name   = "name"
+    values = ["amzn2-ami-hvm-*-x86_64-gp2"]
+  }
+}

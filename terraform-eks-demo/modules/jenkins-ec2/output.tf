@@ -9,3 +9,7 @@ output "jenkins_instance_id" {
 output "jenkins_security_group_id" {
   value = aws_security_group.jenkins_sg.id
 }
+
+output "jenkins_ami_id" {
+  value = data.aws_ami.amazon_linux_2.id
+}
