@@ -36,7 +36,7 @@ module "eks" {
 
 # Jenkins EC2 - put Jenkins into the first public subnet
 module "jenkins" {
-  source = "../../modules/jenkins_ec2"
+  source = "../../modules/jenkins-ec2"
 
   name           = "sd4719-jenkins"
   subnet_id      = element(module.vpc.public_subnets, 0)

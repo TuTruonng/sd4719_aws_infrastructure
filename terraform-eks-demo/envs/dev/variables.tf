@@ -10,7 +10,7 @@ variable "cluster_name" {
 
 variable "node_group_instance_type" {
   type    = string
-  default = "t3.medium"
+  default = "t3.micro"
 }
 
 variable "node_group_desired_capacity" {
@@ -32,5 +32,5 @@ variable "jenkins_ami_id" {
 
 variable "jenkins_instance_type" {
   type    = string
-  default = "t3.medium"
+  default = "t3.micro"
 }
