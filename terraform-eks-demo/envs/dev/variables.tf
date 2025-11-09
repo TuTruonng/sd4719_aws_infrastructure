@@ -5,7 +5,7 @@ variable "aws_region" {
 
 variable "cluster_name" {
   type    = string
-  default = "sd4719-eks-cluster"
+  default = "sd4719-dev-eks-cluster"
 }
 
 variable "node_group_instance_type" {
@@ -13,7 +13,7 @@ variable "node_group_instance_type" {
   default = "t3.micro"
 }
 
-variable "node_group_desired_capacity" {
+variable "node_group_desired_size" {
   type    = number
   default = 1
 }
@@ -33,4 +33,10 @@ variable "jenkins_ami_id" {
 variable "jenkins_instance_type" {
   type    = string
   default = "t3.micro"
+}
+
+variable "single_az" {
+  type    = bool
+  default = false
+  description = "Deploy resources into a single AZ only"
 }

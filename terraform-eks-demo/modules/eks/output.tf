@@ -11,5 +11,5 @@ output "cluster_certificate_authority_data" {
 }
 
 output "node_group_role_arn" {
-  value = module.eks.node_groups["default"].iam_role_arn
+  value = module.eks.eks_managed_node_groups["dev-spot"].iam_role_arn
 }

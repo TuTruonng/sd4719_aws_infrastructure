@@ -7,16 +7,22 @@ variable "vpc_id" {
   type = string
 }
 
-variable "private_subnets" {
+variable "worker_nodes_private_subnets" {
+  description = "Specifies the subnets for the cluster's worker nodes."
+  type = list(string)
+}
+
+variable "control_plane_private_subnets" {
+  description = "Specifies the subnets for the EKS control plane's ENIs."
   type = list(string)
 }
 
 variable "node_group_instance_type" {
   type    = string
-  default = "t3.micro"
+  default = "t3.small"
 }
 
-variable "node_group_desired_capacity" {
+variable "node_group_desired_size" {
   type    = number
   default = 1
 }
