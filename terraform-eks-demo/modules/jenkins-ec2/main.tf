@@ -87,6 +87,7 @@ resource "aws_iam_role_policy" "jenkins_policy" {
   })
 }
 
+# Allow Jenkins EC2 to interact with ECR, and EKS
 resource "aws_iam_instance_profile" "jenkins_profile" {
   name = "${var.name}-instance-profile"
   role = aws_iam_role.jenkins_role.name
@@ -101,12 +102,22 @@ resource "aws_instance" "jenkins" {
   iam_instance_profile        = aws_iam_instance_profile.jenkins_profile.name
   associate_public_ip_address = true
 
-  tags = {
-    Name = var.name
+  # Enable Spot pricing
+  instance_market_options {
+    market_type = "spot"
+    spot_options {
+      instance_interruption_behavior = "stop"
+      max_price                      = "0.015" # adjust depending on region & instance
+    }
   }
 
-  # user_data could bootstrap docker & jenkins; left minimal so you can control it
-  # user_data = file("${path.module}/bootstrap.sh")
+  # External bootstrap script for Jenkins setup
+  user_data = file("${path.module}/scripts/bootstrap_jenkins.sh")
+  
+  tags = {
+    Environment = "dev"
+    Name = var.name
+  }
 }
 
 data "aws_ami" "amazon_linux_2" {
