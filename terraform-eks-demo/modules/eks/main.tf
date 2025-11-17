@@ -5,6 +5,34 @@ module "eks" {
   name               = var.cluster_name
   kubernetes_version = "1.33"
 
+  addons = {
+    coredns = {
+      # you can optionally specify versions or conflict resolution
+      most_recent       = true
+      resolve_conflicts = "PRESERVE"
+      configuration_values = jsonencode({
+        replicaCount = 1
+      })
+    }
+    eks-pod-identity-agent = {
+      before_compute     = true
+      most_recent        = true
+      resolve_conflicts  = "PRESERVE"
+    }
+    kube-proxy = {
+      most_recent       = true
+      resolve_conflicts = "PRESERVE"
+    }
+    vpc-cni = {
+      before_compute     = true
+      most_recent        = true
+      resolve_conflicts  = "PRESERVE"
+    }
+  }
+
+  # Optional
+  endpoint_public_access = true
+
   # Optional: Adds the current caller identity as an administrator via cluster access entry
   enable_cluster_creator_admin_permissions = true
 
@@ -21,11 +49,21 @@ module "eks" {
       capacity_type  = "SPOT"
       disk_size      = 20
 
-      min_size     = 0
-      max_size     = var.node_group_desired_size
+      min_size     = var.node_group_min_size
+      max_size     = var.node_group_max_size
       desired_size = var.node_group_desired_size
+
+      # tags for node group
+      tags = {
+        Name        = "dev-spot"
+        Environment = "dev"
+        Terraform   = "true"
+      }
     }
   }
+
+  create_cloudwatch_log_group = false
+  enabled_log_types = []
 
   tags = {
     Environment = "dev"

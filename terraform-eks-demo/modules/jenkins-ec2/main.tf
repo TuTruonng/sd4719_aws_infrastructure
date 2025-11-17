@@ -102,15 +102,6 @@ resource "aws_instance" "jenkins" {
   iam_instance_profile        = aws_iam_instance_profile.jenkins_profile.name
   associate_public_ip_address = true
 
-  # Enable Spot pricing
-  instance_market_options {
-    market_type = "spot"
-    spot_options {
-      instance_interruption_behavior = "stop"
-      max_price                      = "0.015" # adjust depending on region & instance
-    }
-  }
-
   # External bootstrap script for Jenkins setup
   user_data = file("${path.module}/scripts/bootstrap_jenkins.sh")
   

@@ -9,7 +9,7 @@ variable "subnet_id" {
 
 variable "ssh_key_name" {
   description = "SSH key pair name"
-  type = string
+  type        = string
 }
 
 variable "jenkins_ami_id" {
@@ -19,6 +19,6 @@ variable "jenkins_ami_id" {
 
 variable "instance_type" {
   description = "EC2 instance type"
-  type    = string
-  default = "t3.micro"
+  type        = string
+  default     = "t3.micro"
 }
